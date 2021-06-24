@@ -58,9 +58,23 @@ def get_probabilities_brute(board_size, hints):
         current_row.insert(0,0)
     #TODO: move everything above into the recursive call
 
-    #TODO: come up with probabilities based on all the generated possibilities
+    #TODO: clean this up
+    print (results)
+    probs=[[0]*board_size for i in range(len(hints))]
+    for r in results:
+        for j in range(len(hints)):
+            for innerIndex,k in enumerate(r):
+                if (k==j+1):
+                    probs[j][innerIndex]=probs[j][innerIndex]+1
+                    
+    print(probs)
 
-    return results
+    finalProbs=[{} for i in range(board_size)]
+    for i in range(len(hints)):
+        for j in range(board_size):
+            finalProbs[j][i+1]=probs[i][j]/len(results)
+
+    return finalProbs
 
 
 def recursive_check(current_row, remaining_space, hints, index):
@@ -87,10 +101,10 @@ def recursive_check(current_row, remaining_space, hints, index):
 # test cases for brute force approach
 #print(get_probabilities_brute(5,np.array([2,1])))
 #print(get_probabilities_brute(5,np.array([1,1,1])))
-#print(get_probabilities_brute(5,np.array([1,2])))
+print(get_probabilities_brute(5,np.array([1,2])))
 #print(get_probabilities_brute(5,np.array([3])))
-print(get_probabilities_brute(10,np.array([4,4])))
+#print(get_probabilities_brute(10,np.array([4,4])))
 
 # test cases for simple approach
 #print(get_probabilities_simple(20, np.array([1,3,9])))
-print(get_probabilities_simple(10, np.array([4,4])))
+#print(get_probabilities_simple(10, np.array([4,4])))
